@@ -19,6 +19,8 @@ module RandomData
   end
 
   def random_string
-  	('a'..'z').to_a.shuffle[0,rand(1..8)].join
+  	letters = ('a'..'z').to_a
+  	letters.shuffle!
+  	letters[0,rand(1..8)].join
   end
 end
