@@ -42,7 +42,12 @@ RSpec.describe PostsController do
       expect(assigns(:post)).not_to be_nil
     end
 
-    it "instantiate @post" do
+    it "renders the #new view" do
+      get :new
+      expect(response).to render_template :new
+    end
+
+    it "instantiates @post" do
       get :new
       expect(assigns(:post)).not_to be_nil
     end
@@ -58,8 +63,8 @@ RSpec.describe PostsController do
       expect(assigns(:post)).to eq Post.last
     end
 
-    it "redirects to the new contact" do
-      post :create, {:post => {title: "Title", body: "Body"}}
+    it "redirects to the new post" do
+      post :create, {post: my_post.attributes}
       expect(response).to redirect_to Post.last
     end
   end
@@ -81,4 +86,28 @@ RSpec.describe PostsController do
     end
   end
 
+  describe "PUT update" do
+    it "located the requested post" do
+      put :update, id: my_post.id, post: {title: "Title2", body: "Body2"}
+      expect(assigns(:post)).to eq Post.find(my_post.id)
+    end
+
+    it "updates post with expected attributes" do
+      new_title = RandomData.random_sentence
+      new_body = RandomData.random_paragraph
+
+      put :update, id: my_post.id, post: { title: new_title, body: new_body }
+      
+      updated_post = assigns(:post)
+
+      expect(updated_post.id).to eq my_post.id
+      expect(updated_post.title).to eq new_title
+      expect(updated_post.body).to eq new_body
+    end
+
+    it "redirects to the updated contact" do
+      put :update, id: my_post.id, post: {title: "Title2", body: "Body2"}
+      expect(response).to redirect_to my_post
+    end
+  end
 end
