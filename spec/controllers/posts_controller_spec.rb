@@ -1,14 +1,12 @@
 require 'rails_helper'
 include RandomData
 
-RSpec.describe PostsController, :type => :controller do
-  let(:post_title) { RandomData.random_sentence }
-  let(:post_body) { RandomData.random_paragraph }
-  let (:post) { 
-    Post.new(
+RSpec.describe PostsController do
+  let (:my_post) { 
+    Post.create(
       id: 1,
-      title:  "#{post_title}",
-      body:   "#{post_body}"
+      title:  RandomData.random_sentence,
+      body:   RandomData.random_paragraph
     )
   }
 
@@ -16,15 +14,24 @@ RSpec.describe PostsController, :type => :controller do
     it "returns http success" do
       get :index
       expect(response).to have_http_status(:success)
-      expect(assigns(:posts)).to eq([post])
+      expect(assigns(:posts)).to eq([my_post])
     end
   end
 
   describe "GET show" do
     it "returns http success" do
-      get :show, {:id => '1'}
+      get :show, {id: my_post.id}
       expect(response).to have_http_status(:success)
-      expect(assigns(:post)).to eq(post)
+    end
+
+    it "renders the #show view" do
+      get :show, {id: my_post.id}
+      expect(response).to render_template :show
+    end
+
+    it "assigns my_post to @post" do
+      get :show, {id: my_post.id}
+      expect(assigns(:post)).to eq(my_post)
     end
   end
 
@@ -34,23 +41,43 @@ RSpec.describe PostsController, :type => :controller do
       expect(response).to have_http_status(:success)
       expect(assigns(:post)).not_to be_nil
     end
+
+    it "instantiate @post" do
+      get :new
+      expect(assigns(:post)).not_to be_nil
+    end
   end
 
-  describe "test create" do
-    it "tests Post instantiation" do
-      attrs = FactoryGirl.attributes_for(:post)
-      post :create, post: attrs
-      expect(:post.id).to eq new_post.id
-      expect(:post.title).to eq new_post.title
-      expect(:post.body).to eq new_post.body
+  describe "POST create" do
+    it "increases the number of Post by 1" do
+      expect{ post :create, {post: {title: "Title", body: "Body"}} }.to change(Post,:count).by(1)
+    end
+
+    it "assigns Post.last to @post" do
+      post :create, {post: my_post.attributes}
+      expect(assigns(:post)).to eq Post.last
+    end
+
+    it "redirects to the new contact" do
+      post :create, {:post => {title: "Title", body: "Body"}}
+      expect(response).to redirect_to Post.last
     end
   end
 
   describe "GET edit" do
     it "returns http success" do
-      get :edit, {:id => '1'}
+      get :edit, {id: my_post.id}
       expect(response).to have_http_status(:success)
-      expect(assigns(:post)).not_to be_nil
+    end
+
+    it "renders the #edit view" do
+      get :edit, {id: my_post.id}
+      expect(response).to render_template :edit
+    end
+
+    it "assigns my_post to @post" do
+      get :show, {id: my_post.id}
+      expect(assigns(:post)).to eq(my_post)
     end
   end
 
