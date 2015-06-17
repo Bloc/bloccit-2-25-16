@@ -88,7 +88,11 @@ RSpec.describe PostsController do
 
   describe "PUT update" do
     it "located the requested post" do
-      put :update, id: my_post.id, post: {title: "Title2", body: "Body2"}
+      new_title = RandomData.random_sentence
+      new_body = RandomData.random_paragraph
+
+      put :update, id: my_post.id, post: { title: new_title, body: new_body }
+
       expect(assigns(:post)).to eq Post.find(my_post.id)
     end
 
@@ -105,8 +109,22 @@ RSpec.describe PostsController do
       expect(updated_post.body).to eq new_body
     end
 
+    it "changes @contact's attributes" do
+      new_title = RandomData.random_sentence
+      new_body = RandomData.random_paragraph
+
+      put :update, id: my_post.id, post: { title: new_title, body: new_body }
+      my_post.reload
+      expect(my_post.title).to eq(new_title)
+      expect(my_post.body).to eq(new_body)
+    end
+
     it "redirects to the updated contact" do
-      put :update, id: my_post.id, post: {title: "Title2", body: "Body2"}
+      new_title = RandomData.random_sentence
+      new_body = RandomData.random_paragraph
+
+      put :update, id: my_post.id, post: { title: new_title, body: new_body }
+
       expect(response).to redirect_to my_post
     end
   end
