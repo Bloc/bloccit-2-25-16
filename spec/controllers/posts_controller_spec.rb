@@ -43,6 +43,10 @@ RSpec.describe PostsController do
     it "returns http success" do
       get :new
       expect(response).to have_http_status(:success)
+    end
+
+    it "does not initialize post" do
+      get :new
       expect(assigns(:post)).not_to be_nil
     end
 
