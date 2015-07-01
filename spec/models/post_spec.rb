@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
+
+  it { should belong_to(:topic) }
+
   context "attributes" do
     let(:post) { Post.new(title: "New Post Title", body: "New Post Body") }
 
