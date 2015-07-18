@@ -15,7 +15,6 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers'
-  gem 'bcrypt'
 end
 
 # Use SCSS for stylesheets
