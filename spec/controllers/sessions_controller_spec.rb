@@ -17,7 +17,7 @@ RSpec.describe SessionsController, :type => :controller do
     end
   end
 
-  describe "POST signin" do
+  describe "POST sign_in" do
     it "returns http success" do
       post :create, { session: { email: my_user.email } }
       expect(response).to have_http_status(:success)

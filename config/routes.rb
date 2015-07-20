@@ -4,15 +4,11 @@ Rails.application.routes.draw do
   	resources :posts, except: [:index]
   end
 
+  resources :users, only: [:show, :new, :create]
 
-  resources :users
-
-  get 'new'  => 'users#new'
-
-  get 'sessions/new'
-  get    'signin'   => 'sessions#new'
-  post   'signin'   => 'sessions#create'
-  delete 'signout'  => 'sessions#destroy'
+  get    'sign_in'   => 'sessions#new'
+  post   'sign_in'   => 'sessions#create'
+  delete 'sign_out'  => 'sessions#destroy'
 
   get 'about' => 'welcome#about'
   root to: 'welcome#index'
