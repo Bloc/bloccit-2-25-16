@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out(@current_user)
+    log_out(current_user)
     flash[:notice] = "You've been signed out, come back soon!"
     redirect_to root_path
   end
