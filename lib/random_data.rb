@@ -1,4 +1,14 @@
 module RandomData
+  def random_name
+    first_name = random_string.capitalize
+    last_name = random_string.capitalize
+    "#{first_name} #{last_name}"
+  end
+
+  def random_email
+    "#{random_string}@#{random_string}.#{random_string}"
+  end
+
   def random_paragraph
   	sentences = []
   	rand(4..6).times do
@@ -10,7 +20,7 @@ module RandomData
 
   def random_sentence
   	strings = []
-  	rand(1..8).times do
+  	rand(3..8).times do
   	  strings << random_string
   	end
 
