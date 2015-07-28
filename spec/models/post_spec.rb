@@ -7,6 +7,7 @@ RSpec.describe Post, type: :model do
   it { should validate_length_of(:title).is_at_least(5) }
   it { should validate_length_of(:body).is_at_least(20) }
   it { should belong_to(:topic) }
+  it { should belong_to(:user)}
 
   context "attributes" do
     let(:post) { Post.new(title: "New Post Title", body: "New Post Body") }

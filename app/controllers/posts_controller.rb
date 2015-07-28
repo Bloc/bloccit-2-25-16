@@ -11,10 +11,8 @@ class PostsController < ApplicationController
 
   def create
     @topic = Topic.find(params[:topic_id])
-    @post = Post.new
-    @post.title = params[:post][:title]
-    @post.body = params[:post][:body]
-    @post.topic = @topic
+    @post = @topic.posts.build(post_params)
+    @post.user = current_user
 
     if @post.save
       flash[:notice] = "Post was saved."
@@ -33,8 +31,7 @@ class PostsController < ApplicationController
   def update
     @topic = Topic.find(params[:topic_id])
     @post = Post.find(params[:id])
-    @post.title = params[:post][:title]
-    @post.body = params[:post][:body]
+    @post.assign_attributes(post_params)
 
     if @post.save
       flash[:notice] = "Post was updated."
@@ -56,5 +53,10 @@ class PostsController < ApplicationController
       flash[:error] = "There was an error deleting the post."
       render :show
     end
+  end
+
+  private
+  def post_params
+    params.require(:post).permit(:title, :body)
   end
 end
