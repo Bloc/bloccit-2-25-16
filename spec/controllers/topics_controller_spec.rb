@@ -2,9 +2,8 @@ require 'rails_helper'
 include RandomData
 
 RSpec.describe TopicsController, :type => :controller do
- 
   let (:my_topic) do 
-    Topic.create!(
+    Topic.create(
       name:  RandomData.random_sentence,
       description:   RandomData.random_paragraph
     )
@@ -16,7 +15,7 @@ RSpec.describe TopicsController, :type => :controller do
       expect(response).to have_http_status(:success)
     end
 
-    it "returns http success" do
+    it "assigns Topic.all to topic" do
       get :index
       expect(assigns(:topics)).to eq([my_topic])
     end
