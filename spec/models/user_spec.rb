@@ -25,14 +25,10 @@ RSpec.describe User, :type => :model do
   context "attributes" do
     it "should respond to name" do
       expect(u).to respond_to(:name)
-    end 
+    end
 
     it "should respond to email" do
       expect(u).to respond_to(:email)
-    end
-
-    it "should be a member by default" do
-      expect(u.member?).to be(true)
     end
   end
 
@@ -52,9 +48,5 @@ RSpec.describe User, :type => :model do
     it "should be an invalid user due to incorrectly formatted email address" do
       expect(user_with_invalid_email_format).to_not be_valid
     end
-  end
-
-  context "#can_update_or_delete_post" do
-
   end
 end
