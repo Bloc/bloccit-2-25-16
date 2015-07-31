@@ -14,7 +14,7 @@ class PostsController < ApplicationController
     @post = topic.posts.build(post_params)
     @post.user = current_user
 
-    if @post.save!
+    if @post.save
       flash[:notice] = "Post was saved."
       redirect_to [topic, @post]
     else
@@ -34,7 +34,7 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    
+
     unless current_user.can_update_or_delete_post?(@post)
       flash[:error] = "You are not authorized to do that."
       redirect_to [@post.topic, @post] and return
