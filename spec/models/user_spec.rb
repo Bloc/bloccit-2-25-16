@@ -1,6 +1,9 @@
 require 'rails_helper'
+include RandomData
 
 RSpec.describe User, :type => :model do
+  let(:u) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
+
   it { should have_many(:posts)}
 
   # Shoulda tests for name
@@ -20,15 +23,17 @@ RSpec.describe User, :type => :model do
   it { should validate_length_of(:password).is_at_least(6) }
 
   context "attributes" do
-    let(:u) { User.new(name: "Bloccit User", email: "user@bloccit.com") }
-
     it "should respond to name" do
       expect(u).to respond_to(:name)
     end 
 
     it "should respond to email" do
       expect(u).to respond_to(:email)
-    end 
+    end
+
+    it "should be a member by default" do
+      expect(u.member?).to be(true)
+    end
   end
 
   context "invalid user" do
@@ -47,6 +52,9 @@ RSpec.describe User, :type => :model do
     it "should be an invalid user due to incorrectly formatted email address" do
       expect(user_with_invalid_email_format).to_not be_valid
     end
-    
+  end
+
+  context "#can_update_or_delete_post" do
+
   end
 end
