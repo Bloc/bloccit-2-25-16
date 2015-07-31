@@ -11,5 +11,11 @@ class User < ActiveRecord::Base
             format: { with: EMAIL_REGEX }
   validates :password, presence: true, length: { minimum: 6 }, on: :create
   
+  enum role: [:member, :admin ]
+
   has_secure_password
+
+  def can_update_or_delete_post?(post)
+    post.user == self || admin?
+  end
 end

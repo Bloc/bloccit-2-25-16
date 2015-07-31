@@ -1,4 +1,6 @@
 class TopicsController < ApplicationController
+  skip_before_action :require_login, only: [:index, :show]
+
   def index
    @topics = Topic.all
   end
@@ -8,10 +10,20 @@ class TopicsController < ApplicationController
   end
 
   def new
+    unless current_user.admin?
+      flash[:error] = "You must be an admin to do that."
+      redirect_to topics_path and return
+    end 
+
     @topic = Topic.new
   end  
 
   def create
+    unless current_user.admin?
+      flash[:error] = "You must be an admin to do that."
+      redirect_to topics_path and return
+    end
+
     @topic = Topic.new(topic_params)
 
     if @topic.save
@@ -23,10 +35,20 @@ class TopicsController < ApplicationController
   end
 
   def edit
+    unless current_user.admin?
+      flash[:error] = "You must be an admin to do that."
+      redirect_to topics_path and return
+    end
+
     @topic = Topic.find(params[:id])
   end
 
   def update
+    unless current_user.admin?
+      flash[:error] = "You must be an admin to do that."
+      redirect_to topics_path and return
+    end
+
     @topic = Topic.find(params[:id])
     @topic.assign_attributes(topic_params)
 
@@ -39,6 +61,11 @@ class TopicsController < ApplicationController
   end
 
   def destroy
+    unless current_user.admin?
+      flash[:error] = "You must be an admin to do that."
+      redirect_to topics_path and return
+    end
+
     @topic = Topic.find(params[:id])
     
     if @topic.destroy

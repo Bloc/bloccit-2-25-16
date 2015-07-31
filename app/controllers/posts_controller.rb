@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  skip_before_action :require_login, only: :show
+
   def show
     @post = Post.find(params[:id])
   end
@@ -23,10 +25,21 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
+
+    unless current_user.can_update_or_delete_post?(@post)
+      flash[:error] = "You are not authorized to do that."
+      redirect_to [@post.topic, @post] and return
+    end
   end
 
   def update
     @post = Post.find(params[:id])
+    
+    unless current_user.can_update_or_delete_post?(@post)
+      flash[:error] = "You are not authorized to do that."
+      redirect_to [@post.topic, @post] and return
+    end
+
     @post.assign_attributes(post_params)
 
     if @post.save
@@ -40,6 +53,11 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
+
+    unless current_user.can_update_or_delete_post?(@post)
+      flash[:error] = "You are not authorized to do that."
+      redirect_to [@post.topic, @post] and return
+    end
 
     if @post.destroy
       flash[:notice] = "\"#{@post.title}\" was deleted successfully."
