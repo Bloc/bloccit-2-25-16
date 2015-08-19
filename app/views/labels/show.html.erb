@@ -1,0 +1,15 @@
+<br />
+<div class="row">
+  <div class="col-md-8">
+    <h1>Label Name: <%= @label.name %></h1>
+    <p class="lead">
+      <% if @context == "Topic" %>
+          <% topic = Topic.find(@label.labelable_id) %>
+          Topic: <%= link_to topic.name, topic %>
+      <% elsif @context == "Post" %>
+          <% post = Post.find(@label.labelable_id) %>
+          Post: <%= link_to post.title, topic_post_path(post.topic, post) %>
+      <% end %>
+    </p>
+  </div>
+</div>

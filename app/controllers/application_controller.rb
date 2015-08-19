@@ -4,6 +4,18 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
 
+  def update_labels(labels)
+    new_labels = []
+    if labels != nil && labels.size > 0
+      labels.split(",").each do |label|
+        stripped_label = label.strip
+        l = Label.new(name: stripped_label)
+        new_labels << l
+      end
+    end
+    new_labels
+  end
+
   private
   def require_sign_in
     unless current_user

@@ -2,6 +2,7 @@ class Post < ActiveRecord::Base
   belongs_to :topic
   belongs_to :user
   has_many :comments, dependent: :destroy
+  has_many :labels, as: :labelable
 
   default_scope { order('created_at DESC') }
 
