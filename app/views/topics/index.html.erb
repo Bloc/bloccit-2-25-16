@@ -7,6 +7,7 @@
         <div class="media-body">
           <h4 class="media-heading">
             <%= link_to topic.name, topic %>
+            <%= render partial: "labels/show_labels", locals: { context: topic, labels: topic.labels } %>
           </h4>
           <small>
             <%= topic.description %>

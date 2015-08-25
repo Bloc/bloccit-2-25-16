@@ -16,10 +16,10 @@ class PostsController < ApplicationController
     @post = @topic.posts.build(post_params)
     @post.user = current_user
 
-    @post.labels = update_labels(params[:post][:labels])
 
     if @post.save
       flash[:notice] = "Post was saved."
+      @post.labels = Label.update_labels(params[:post][:labels])
       redirect_to [@topic, @post]
     else
       flash[:error] = "There was an error saving the post. Please try again."
@@ -34,10 +34,10 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     @post.assign_attributes(post_params)
-    @post.labels = update_labels(params[:post][:labels])
 
     if @post.save
       flash[:notice] = "Post was updated."
+      @post.labels = Label.update_labels(params[:post][:labels])
       redirect_to [@post.topic, @post]
     else
       flash[:error] = "There was an error saving the post. Please try again."
