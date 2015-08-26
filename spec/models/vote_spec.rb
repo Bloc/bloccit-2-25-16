@@ -14,7 +14,7 @@ RSpec.describe Vote, type: :model do
 
   describe "update_post_rank callback" do
     it "triggers update_post_rank on save" do
-      expect(vote).to receive(:update_post_rank).at_least(:once)
+      expect(vote).to receive(:update_post).at_least(:once)
       vote.save
     end
 

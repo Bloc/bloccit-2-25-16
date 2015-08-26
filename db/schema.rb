@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< Updated upstream
-ActiveRecord::Schema.define(version: 20150821235154) do
-=======
-ActiveRecord::Schema.define(version: 20150825013534) do
->>>>>>> Stashed changes
+ActiveRecord::Schema.define(version: 20150828001005) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "body"
@@ -28,30 +24,31 @@ ActiveRecord::Schema.define(version: 20150825013534) do
   add_index "comments", ["post_id"], name: "index_comments_on_post_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
-  create_table "favorites", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "post_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "favorites", ["post_id"], name: "index_favorites_on_post_id"
-  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
-
   create_table "labelings", force: :cascade do |t|
     t.integer  "label_id"
-    t.string   "labelable_type"
+    t.integer  "topic_id"
     t.integer  "labelable_id"
+    t.string   "labelable_type"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
 
+  add_index "labelings", ["label_id"], name: "index_labelings_on_label_id"
+  add_index "labelings", ["labelable_type", "labelable_id"], name: "index_labelings_on_labelable_type_and_labelable_id"
+  add_index "labelings", ["topic_id"], name: "index_labelings_on_topic_id"
+
   create_table "labels", force: :cascade do |t|
     t.string   "name"
     t.integer  "labelable_id"
+    t.integer  "topics_id"
+    t.integer  "posts_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  add_index "labels", ["labelable_id"], name: "index_labels_on_labelable_id"
+  add_index "labels", ["posts_id"], name: "index_labels_on_posts_id"
+  add_index "labels", ["topics_id"], name: "index_labels_on_topics_id"
 
   create_table "posts", force: :cascade do |t|
     t.string   "title"
