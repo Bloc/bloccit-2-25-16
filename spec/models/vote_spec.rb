@@ -13,8 +13,8 @@ RSpec.describe Vote, type: :model do
   it { should validate_inclusion_of(:value).in_array([-1, 1]) }
 
   describe "update_post_rank callback" do
-    it "triggers update_post_rank on save" do
-      expect(vote).to receive(:update_post_rank).at_least(:once)
+    it "triggers update_post on save" do
+      expect(vote).to receive(:update_post).at_least(:once)
       vote.save
     end
 

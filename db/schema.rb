@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< Updated upstream
-ActiveRecord::Schema.define(version: 20150821235154) do
-=======
 ActiveRecord::Schema.define(version: 20150825013534) do
->>>>>>> Stashed changes
 
   create_table "comments", force: :cascade do |t|
     t.text     "body"
@@ -78,9 +74,10 @@ ActiveRecord::Schema.define(version: 20150825013534) do
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "role"
+    t.boolean  "email_favorites", default: true
   end
 
   create_table "votes", force: :cascade do |t|
