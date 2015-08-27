@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< Updated upstream
-ActiveRecord::Schema.define(version: 20150821235154) do
-=======
-ActiveRecord::Schema.define(version: 20150825013534) do
->>>>>>> Stashed changes
+ActiveRecord::Schema.define(version: 20150827214552) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "body"
@@ -37,21 +33,6 @@ ActiveRecord::Schema.define(version: 20150825013534) do
 
   add_index "favorites", ["post_id"], name: "index_favorites_on_post_id"
   add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
-
-  create_table "labelings", force: :cascade do |t|
-    t.integer  "label_id"
-    t.string   "labelable_type"
-    t.integer  "labelable_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  create_table "labels", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "labelable_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
 
   create_table "posts", force: :cascade do |t|
     t.string   "title"
