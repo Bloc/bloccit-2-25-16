@@ -6,7 +6,7 @@ RSpec.describe Topic, type: :model do
 
   it { should have_many(:posts) }
 
-  context "attributes" do
+  describe "attributes" do
     it "should respond to name" do
       expect(topic).to respond_to(:name)
     end
