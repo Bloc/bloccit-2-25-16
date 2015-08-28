@@ -4,6 +4,7 @@ include SessionsHelper
 
 RSpec.describe TopicsController, type: :controller do
   let (:my_topic) { Topic.create!(name:  RandomData.random_sentence, description:   RandomData.random_paragraph) }
+  let (:my_private_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph, public: false) }
 
   context "guest" do
     describe "GET index" do
@@ -88,7 +89,7 @@ RSpec.describe TopicsController, type: :controller do
 
       it "assigns Topic.all to topic" do
         get :index
-        expect(assigns(:topics)).to eq([my_topic])
+        expect(assigns(:topics)).to eq([my_topic, my_private_topic])
       end
     end
 
@@ -162,7 +163,7 @@ RSpec.describe TopicsController, type: :controller do
 
       it "assigns Topic.all to topic" do
         get :index
-        expect(assigns(:topics)).to eq([my_topic])
+        expect(assigns(:topics)).to eq([my_topic, my_private_topic])
       end
     end
 
