@@ -1,3 +1,5 @@
+include LabelsHelper
+
 class PostsController < ApplicationController
   before_action :require_sign_in, except: :show
   before_action :authorize_user, except: [:show, :new, :create]
@@ -18,6 +20,7 @@ class PostsController < ApplicationController
 
     if @post.save
       flash[:notice] = "Post was saved."
+      @post.labels = Label.update_labels(params[:post][:labels])
       redirect_to [@topic, @post]
     else
       flash[:error] = "There was an error saving the post. Please try again."
@@ -35,6 +38,7 @@ class PostsController < ApplicationController
 
     if @post.save
       flash[:notice] = "Post was updated."
+      @post.labels = Label.update_labels(params[:post][:labels])
       redirect_to [@post.topic, @post]
     else
       flash[:error] = "There was an error saving the post. Please try again."
