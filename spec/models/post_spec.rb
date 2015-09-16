@@ -6,6 +6,8 @@ RSpec.describe Post, type: :model do
   let(:user) { create(:user) }
   let(:post) { create(:post) }
 
+  let(:second_post) { Post.new(title: RandomData.random_sentence, body: RandomData.random_paragraph, topic: topic, user: user) }
+
   it { should have_many(:labelings) }
   it { should have_many(:labels).through(:labelings) }
 
@@ -54,6 +56,13 @@ RSpec.describe Post, type: :model do
       it "returns the sum of all down and up votes" do
         expect( post.points ).to eq(1) # 3 - 2
       end
+    end
+  end
+
+  describe "after_create" do
+    it "sends an email to the owner of the post" do
+      expect(FavoriteMailer).to receive(:new_post).with(second_post).and_return(double(deliver_now: true))
+      second_post.save
     end
   end
 end
