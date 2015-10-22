@@ -65,9 +65,8 @@ ActiveRecord::Schema.define(version: 20150915151808) do
     t.integer  "severity"
     t.integer  "topic_id"
     t.integer  "post_id"
-    t.integer  "rateable_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "ratings", ["post_id"], name: "index_ratings_on_post_id"

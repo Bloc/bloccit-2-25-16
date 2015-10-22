@@ -6,7 +6,6 @@ class CreateRatings < ActiveRecord::Migration
       t.integer :post_id
       t.references :topic, index: true
       t.references :post, index: true
-      t.references :rateable
 
       t.timestamps null: false
     end

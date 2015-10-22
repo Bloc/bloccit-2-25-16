@@ -3,7 +3,7 @@ class Rating < ActiveRecord::Base
 
   has_many :topics
   has_many :posts
-  belongs_to :rateable, polymorphic: true
+
   before_save { self.severity ||= :pg }
 
   def self.update_rating(rating)
