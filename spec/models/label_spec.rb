@@ -8,7 +8,9 @@ RSpec.describe Label, type: :model do
   let(:label) { Label.create!(name: 'Label') }
   let(:label2) { Label.create!(name: 'Label2') }
 
-  it { should belong_to :labelable }
+  it { should have_many :labelings }
+  it { should have_many(:topics).through(:labelings) }
+  it { should have_many(:posts).through(:labelings) }
 
   describe "labelable" do
     it "allows the same label to be associated with a different topic and post" do
